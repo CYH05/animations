@@ -1,0 +1,84 @@
+import 'package:flutter/material.dart';
+
+class ControlledFloatingButton extends StatefulWidget {
+  const ControlledFloatingButton({Key? key}) : super(key: key);
+
+  @override
+  _ControlledFloatingButtonState createState() =>
+      _ControlledFloatingButtonState();
+}
+
+class _ControlledFloatingButtonState extends State<ControlledFloatingButton>
+    with TickerProviderStateMixin {
+  late AnimationController _animateController;
+  late Animation<double> _scaleXController;
+  late Animation<double> _scaleYController;
+  late Animation<Size> _sizeController;
+  late Animation<double> _shapeController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _animateController =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
+
+    _sizeController =
+        Tween<Size>(begin: const Size(40, 40), end: const Size(90, 40))
+            .animate(_animateController);
+
+    _scaleXController =
+        Tween<double>(begin: 20, end: 150).animate(_animateController);
+
+    _scaleYController =
+        Tween<double>(begin: 20, end: 400).animate(_animateController);
+
+    _shapeController =
+        Tween<double>(begin: 100, end: 0).animate(_animateController);
+  }
+
+  void _animate() {
+    if (_animateController.value == 0.0) {
+      _animateController.forward();
+    } else {
+      _animateController.reverse();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.blue,
+        title: const Text("Desafio do botão flutuante"),
+      ),
+      body: Container(
+        child: AnimatedBuilder(
+          animation: _animateController,
+          builder: (context, child) {
+            return GestureDetector(
+              onTap: _animate,
+              child: Stack(
+                children: [
+                  Positioned(
+                    bottom: _scaleYController.value,
+                    right: _scaleXController.value,
+                    child: Container(
+                      width: _sizeController.value.width,
+                      height: _sizeController.value.height,
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius:
+                            BorderRadius.circular(_shapeController.value),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
