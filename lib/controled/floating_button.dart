@@ -52,32 +52,30 @@ class _ControlledFloatingButtonState extends State<ControlledFloatingButton>
         backgroundColor: Colors.blue,
         title: const Text("Desafio do botão flutuante"),
       ),
-      body: Container(
-        child: AnimatedBuilder(
-          animation: _animateController,
-          builder: (context, child) {
-            return GestureDetector(
-              onTap: _animate,
-              child: Stack(
-                children: [
-                  Positioned(
-                    bottom: _scaleYController.value,
-                    right: _scaleXController.value,
-                    child: Container(
-                      width: _sizeController.value.width,
-                      height: _sizeController.value.height,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius:
-                            BorderRadius.circular(_shapeController.value),
-                      ),
+      body: AnimatedBuilder(
+        animation: _animateController,
+        builder: (context, child) {
+          return GestureDetector(
+            onTap: _animate,
+            child: Stack(
+              children: [
+                Positioned(
+                  bottom: _scaleYController.value,
+                  right: _scaleXController.value,
+                  child: Container(
+                    width: _sizeController.value.width,
+                    height: _sizeController.value.height,
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius:
+                          BorderRadius.circular(_shapeController.value),
                     ),
-                  )
-                ],
-              ),
-            );
-          },
-        ),
+                  ),
+                )
+              ],
+            ),
+          );
+        },
       ),
     );
   }
