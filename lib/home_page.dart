@@ -1,3 +1,4 @@
+import 'package:animations/controled/expansion_tile.dart';
 import 'package:animations/implicits/expansion_tile.dart';
 import 'package:flutter/material.dart';
 
@@ -31,8 +32,9 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       setState(() {
                         _implicitMenuChecked = !_implicitMenuChecked;
-                        if (_controlledMenuChecked)
+                        if (_controlledMenuChecked) {
                           _controlledMenuChecked = false;
+                        }
                       });
                     },
                     child: const Text("Animações implícitas"),
@@ -42,7 +44,7 @@ class _HomePageState extends State<HomePage> {
                       alignment: _implicitMenuChecked
                           ? Alignment.topCenter
                           : Alignment.bottomCenter,
-                      duration: Duration(milliseconds: 500),
+                      duration: const Duration(milliseconds: 500),
                       heightFactor: _implicitMenuChecked ? 1 : 0,
                       child: Column(
                         children: [
@@ -136,7 +138,13 @@ class _HomePageState extends State<HomePage> {
                           padding: const EdgeInsets.only(top: 10),
                           child: RaisedButton(
                             color: Colors.blue,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ControlledExpansionTile()));
+                            },
                             child: const Text(
                               "Scroll view",
                               style: TextStyle(
