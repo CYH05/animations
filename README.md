@@ -4,11 +4,7 @@ An exercise to practice implicits and controlled animations.
 
 ## Status
 
-Not finished.
-
-## To finish
-
-Aply recursion on controlled floating button, because he is animated with fixed coordinates.
+Finished.
 
 ## Results
 
