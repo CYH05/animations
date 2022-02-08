@@ -11,8 +11,7 @@ class ControlledFloatingButton extends StatefulWidget {
 class _ControlledFloatingButtonState extends State<ControlledFloatingButton>
     with TickerProviderStateMixin {
   late AnimationController _animateController;
-  late Animation<double> _scaleXController;
-  late Animation<double> _scaleYController;
+  late Animation<Alignment> _positionController;
   late Animation<Size> _sizeController;
   late Animation<double> _shapeController;
 
@@ -27,11 +26,9 @@ class _ControlledFloatingButtonState extends State<ControlledFloatingButton>
         Tween<Size>(begin: const Size(40, 40), end: const Size(90, 40))
             .animate(_animateController);
 
-    _scaleXController =
-        Tween<double>(begin: 20, end: 150).animate(_animateController);
-
-    _scaleYController =
-        Tween<double>(begin: 20, end: 400).animate(_animateController);
+    _positionController =
+        Tween<Alignment>(begin: Alignment.bottomRight, end: Alignment.topCenter)
+            .animate(_animateController);
 
     _shapeController =
         Tween<double>(begin: 100, end: 0).animate(_animateController);
@@ -56,25 +53,19 @@ class _ControlledFloatingButtonState extends State<ControlledFloatingButton>
         animation: _animateController,
         builder: (context, child) {
           return GestureDetector(
-            onTap: _animate,
-            child: Stack(
-              children: [
-                Positioned(
-                  bottom: _scaleYController.value,
-                  right: _scaleXController.value,
-                  child: Container(
-                    width: _sizeController.value.width,
-                    height: _sizeController.value.height,
-                    decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius:
-                          BorderRadius.circular(_shapeController.value),
-                    ),
+              onTap: _animate,
+              child: Align(
+                alignment: _positionController.value,
+                child: Container(
+                  margin: const EdgeInsets.all(15),
+                  width: _sizeController.value.width,
+                  height: _sizeController.value.height,
+                  decoration: BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.circular(_shapeController.value),
                   ),
-                )
-              ],
-            ),
-          );
+                ),
+              ));
         },
       ),
     );
